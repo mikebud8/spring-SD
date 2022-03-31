@@ -1,4 +1,4 @@
-package com.mikebud.sockingdingers;
+package com.mikebud.sockingdingers.network;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
