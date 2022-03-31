@@ -1,15 +1,18 @@
 package com.mikebud.sockingdingers.consts;
 
 public enum FieldingPositions {
-	PITCHER(1, "Pitcher", "P"),
-	CATCHER(2, "Catcher", "C"),
-	FIRSTBASE(3, "First Baseman", "1B"),
-	SECONDBASE(4, "Second Baseman", "2B"),
-	THIRDBASE(5, "Third Baseman", "3B"),
-	SHORTSTOP(6, "Shortstop", "SS"),
-	LEFT(7, "Left Fielder", "LF"),
-	CENTER(8, "Center Fielder", "CF"),
-	RIGHT(9, "Right Fielder", "RF")
+	STARTER(0, "Starter", "SP"),
+	RELIEVER(1, "Reliever", "RP"),
+	CLOSER(2, "Closer", "CP"),
+	CATCHER(3, "Catcher", "C"),
+	FIRSTBASE(4, "First Baseman", "1B"),
+	SECONDBASE(5, "Second Baseman", "2B"),
+	THIRDBASE(6, "Third Baseman", "3B"),
+	SHORTSTOP(7, "Shortstop", "SS"),
+	LEFT(8, "Left Fielder", "LF"),
+	CENTER(9, "Center Fielder", "CF"),
+	RIGHT(10, "Right Fielder", "RF"),
+	DH(11, "Designated Hitter", "DH")
 	;
 	
 	private final int positionNum;

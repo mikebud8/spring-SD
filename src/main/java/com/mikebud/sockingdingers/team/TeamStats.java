@@ -1,4 +1,4 @@
-package com.mikebud.sockingdingers.game;
+package com.mikebud.sockingdingers.team;
 
 public class TeamStats {
 

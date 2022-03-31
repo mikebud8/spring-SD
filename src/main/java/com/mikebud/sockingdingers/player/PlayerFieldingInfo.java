@@ -11,4 +11,9 @@ public class PlayerFieldingInfo {
 		position = pos;
 		bonus = bonusIn;
 	}
+	
+	@Override
+	public String toString() {
+		return (position.getPositionInitials() + "+" + bonus);
+	}
 }

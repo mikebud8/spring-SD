@@ -1,8 +1,8 @@
 package com.mikebud.sockingdingers.game;
 
-public class GameState {
+import com.mikebud.sockingdingers.team.Team;
 
-	public long gameId;
+public class GameState {
 	
 	public Inning inning;
 
@@ -14,8 +14,7 @@ public class GameState {
 	public Team homeTeam;
 	public Team awayTeam;
 
-	public GameState( long gameIdIn ) {
-		gameId = gameIdIn;
+	public GameState( ) {
 		inning = new Inning();
 		homeTeam = new Team();
 		awayTeam = new Team();
@@ -29,4 +28,9 @@ public class GameState {
 		homeTeam = teamIn;
 	}
 
+	@Override
+	public String toString() {
+		return "Home Team: " + homeTeam.name +
+				"Away Team: " + awayTeam.name;
+	}
 }

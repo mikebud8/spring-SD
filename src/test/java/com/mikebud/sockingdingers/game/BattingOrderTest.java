@@ -3,6 +3,7 @@ package com.mikebud.sockingdingers.game;
 import org.junit.jupiter.api.Test;
 
 import com.mikebud.sockingdingers.player.Player;
+import com.mikebud.sockingdingers.team.BattingOrder;
 
 public class BattingOrderTest {
 

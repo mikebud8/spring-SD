@@ -6,7 +6,7 @@ public class Player {
 
 	public String name;
 	public int onBaseControl;
-	public int speedInnings;
+	public String speedInnings;
 	public int cost;
 
 	//in-game stuff
@@ -25,4 +25,5 @@ public class Player {
 		positionsArray = new ArrayList<PlayerFieldingInfo>();
 		
 	}
+	
 }

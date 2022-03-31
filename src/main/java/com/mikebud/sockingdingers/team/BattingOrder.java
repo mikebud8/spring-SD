@@ -1,4 +1,4 @@
-package com.mikebud.sockingdingers.game;
+package com.mikebud.sockingdingers.team;
 
 import java.util.ArrayList;
 import java.util.Iterator;

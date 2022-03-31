@@ -9,9 +9,16 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;
 
+import com.mikebud.sockingdingers.database.DbPlayer;
+import com.mikebud.sockingdingers.game.GameInstance;
+import com.mikebud.sockingdingers.game.GameState;
+import com.mikebud.sockingdingers.player.Player;
+
 @SpringBootApplication
 public class SockingDingersApplication {
 
+	public static GameInstance gi = new GameInstance(1);
+	
 	public static void main(String[] args) {
 		SpringApplication.run(SockingDingersApplication.class, args);
 	}
@@ -21,12 +28,11 @@ public class SockingDingersApplication {
 		return args -> {
 
 			System.out.println("Let's inspect the beans provided by Spring Boot:");
-			
-			/*String[] beanNames = ctx.getBeanDefinitionNames();
-			Arrays.sort(beanNames);
-			for (String beanName : beanNames) {
-				System.out.println(beanName);
-			}*/
+			DbPlayer dbp = new DbPlayer();
+			Player p1 = dbp.getPlayerFromDatabase(1);
+			p1.rollMap.setStats();
+			System.out.println(p1.name + "\nPositions:\n" + p1.positionsArray.toString() + ".\nRolls:\n" + p1.rollMap.toString());
+			Player p2 = dbp.getPlayerFromDatabase(2);
 
 		};
 	}
