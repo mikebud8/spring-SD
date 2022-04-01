@@ -122,6 +122,8 @@ public class DbPlayer {
 					p.rollMap.dinger.min = rs.getInt("HR_min");
 					p.rollMap.dinger.max = rs.getInt("HR_max");
 				}
+				
+				p.rollMap.setStats();
 			} 
 			// STEP 5: Clean-up environment 
 			rs.close();

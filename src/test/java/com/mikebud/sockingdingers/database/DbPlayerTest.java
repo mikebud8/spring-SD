@@ -1,11 +1,5 @@
 package com.mikebud.sockingdingers.database;
 
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.sql.Connection;
-import java.sql.SQLException;
-
-import org.h2.tools.RunScript;
 import org.junit.jupiter.api.Test;
 import org.springframework.test.context.jdbc.Sql;
 

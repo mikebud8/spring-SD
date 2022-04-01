@@ -1,11 +1,18 @@
 package com.mikebud.sockingdingers.player;
 
+import java.io.Serializable;
+
 import com.mikebud.sockingdingers.consts.FieldingPositions;
 
-public class PlayerFieldingInfo {
+public class PlayerFieldingInfo implements Serializable {
 
-	FieldingPositions position;
-	int bonus;
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 4236548920870762060L;
+	
+	public FieldingPositions position;
+	public int bonus;
 
 	public PlayerFieldingInfo( FieldingPositions pos, int bonusIn ) {
 		position = pos;

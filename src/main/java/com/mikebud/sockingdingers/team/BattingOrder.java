@@ -4,11 +4,13 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.mikebud.sockingdingers.player.Player;
 
 public class BattingOrder {
 	private List<Player> order = new ArrayList<Player>();
-	public Iterator<Player> itr;
+	
+	private Iterator<Player> itr;
 	private Player currentBatter = null;
 
 	public BattingOrder(Player bo_1, Player bo_2, Player bo_3,Player bo_4,
@@ -52,5 +54,10 @@ public class BattingOrder {
 
 	public List<Player> getOrder(){
 		return order;
+	}
+	
+	@JsonIgnore
+	public Iterator<Player> getItr(){
+	   return itr;
 	}
 }

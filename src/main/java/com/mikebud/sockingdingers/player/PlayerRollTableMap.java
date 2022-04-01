@@ -4,6 +4,8 @@ import java.util.TreeMap;
 
 import com.mikebud.sockingdingers.consts.BasesOnHit;
 
+//We aren't going over the wire with this.
+@SuppressWarnings("serial")
 public class PlayerRollTableMap extends TreeMap<Integer, BasesOnHit> {
 	public RollStat popOut = new RollStat();
 	public RollStat strikeOut = new RollStat();
