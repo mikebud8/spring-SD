@@ -1,6 +1,7 @@
 package com.mikebud.sockingdingers.consts;
 
 public enum BasesOnHit{
+	NO_ATBAT(-1),
 	POPOUT(0),
 	STRIKEOUT(0),
 	GROUNDOUT(0),

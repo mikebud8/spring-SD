@@ -1,12 +1,14 @@
-package com.mikebud.sockingdingers.database;
+package com.mikebud.sockingdingers.team;
 
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.jdbc.datasource.init.ScriptUtils;
 
-public class DbPlayerTest {
-	
+import com.mikebud.sockingdingers.database.DbPlayer;
+
+public class TeamDatabaseTest {
+
     @BeforeAll
     static void setup() {
         try {
@@ -16,13 +18,13 @@ public class DbPlayerTest {
         	
         }
     }
-    
+	
 	@Test
-	public void testDatabase() {
+	void testTeamDatabase() {
+		
 		DbPlayer dbp = new DbPlayer();
-		
-		
-		
-		dbp.getPlayerFromDatabase(1);
+		Team t = dbp.getTeamFromDatabase(1);
+		System.out.println("team1 = " + t.name);
 	}
+	
 }

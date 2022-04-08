@@ -31,3 +31,6 @@ build/
 
 ### VS Code ###
 .vscode/
+
+# Socking Dingers
+src/main/resources/*.csv

@@ -8,9 +8,13 @@ public class TeamScoresheet {
 	
 	public TeamScoresheet() {
 		scoresheet = new ArrayList<Integer>();
+		for( int i = 0; i < 9 ; i++ ) {
+		scoresheet.add(0);
+		}
 	}
 	
 	public void setScore(int inning, int score) {
-		scoresheet.add(inning, score);
+		int cumulativeScore = scoresheet.get(inning);
+		scoresheet.add(inning, (cumulativeScore + score));
 	}
 }

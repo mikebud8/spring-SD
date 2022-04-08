@@ -8,7 +8,7 @@ public class DiceRoller {
 		//no-op
 	};
 	
-	public int rollDice(int dSides, int nDice) {
+	public static int rollDice(int dSides, int nDice) {
 
 		// nextInt is normally exclusive of the top value,
 		// so add 1 to make it inclusive
