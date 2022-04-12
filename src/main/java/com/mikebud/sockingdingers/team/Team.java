@@ -11,7 +11,7 @@ public class Team {
 	
 	public Team() {
 		name = "";
-		bo = new BattingOrder(null, null, null, null, null, null, null, null, null);
+		bo = new BattingOrder();
 		ts = new TeamStats();
 		scoreSheet = new TeamScoresheet();
 		bullpen = new Bullpen();

@@ -4,7 +4,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 
 import com.mikebud.sockingdingers.consts.BasesOnHit;
-import com.mikebud.sockingdingers.consts.Scenario;
+import com.mikebud.sockingdingers.consts.EventEnum;
 import com.mikebud.sockingdingers.team.Team;
 import com.mikebud.sockingdingers.utilities.DiceRoller;
 import com.mikebud.sockingdingers.utilities.GamestateToJson;
@@ -78,9 +78,9 @@ public class GameState implements Serializable {
 				"Away Team: " + awayTeam.name;
 	}
 
-	public void newRoll(int rollDice, GameScenario gameScenario) {
+	public void newRoll(int rollDice, GameEvent gameScenario) {
 
-		Scenario scenario = gameScenario.currentScenario;
+		EventEnum scenario = gameScenario.currentEvent;
 
 		switch (scenario) {
 		// For a pitcher roll, you're just trying to find who has advantage
@@ -124,7 +124,7 @@ public class GameState implements Serializable {
 
 	private void resolveBasepath(BasesOnHit outcome) {
 		int runs = field.hit(battingTeam().bo.getCurrentBatter(), outcome);
-		battingTeam().scoreSheet.setScore(inning.inningNum, runs);
+		battingTeam().scoreSheet.setScore(inning.inningIdx, runs);
 		battingTeam().ts.runs += runs;
 	}
 
@@ -171,14 +171,15 @@ public class GameState implements Serializable {
 	}
 	
 	public void simGame() {
-		GameScenario scenario;
+		
+		GameEvent scenario;
 		while(!gameOver) {
 			System.out.println("Game Over = " + gameOver
-					+ "\nInning = " + inning.inningNum + ". isTop = " + inning.isTopOfInning + ". Outs = " + inning.outs );
-			scenario = new GameScenario(1);
+					+ "\nInning = " + (inning.inningIdx + 1) + ". isTop = " + inning.isTopOfInning + ". Outs = " + inning.outs );
+			scenario = new GameEvent(1);
 			newRoll(DiceRoller.rollDice(20,1), scenario);
 
-			scenario = new GameScenario(2);
+			scenario = new GameEvent(2);
 			newRoll(DiceRoller.rollDice(20,1), scenario);
 		}
 	}
@@ -200,10 +201,14 @@ public class GameState implements Serializable {
 			fieldingTeam = TeamIndex.AWAY;
 
 		} else {
-			if (inning.inningNum >= 9 && homeTeam.ts.runs != awayTeam.ts.runs) {
+			if (inning.inningIdx >= 8 && homeTeam.ts.runs != awayTeam.ts.runs) {
 				gameOver();
 			} else {
-				inning.inningNum++;
+				
+				//set scoresheet appropriately.
+				handleExtraInnings();
+				
+				inning.inningIdx++;
 				inning.isTopOfInning = true;
 				battingTeam = TeamIndex.AWAY;
 				fieldingTeam = TeamIndex.HOME;
@@ -211,10 +216,14 @@ public class GameState implements Serializable {
 		}
 		
 		if( !gameOver ) {
-			System.out.println("It's " + (inning.isTopOfInning ? "top" : "bottom") + " of the " + inning.inningNum);
+			System.out.println("It's " + (inning.isTopOfInning ? "top" : "bottom") + " of the " + (inning.inningIdx + 1));
 		}
 	}
 
+	private void handleExtraInnings() {
+			homeTeam.scoreSheet.scoresheet.add(0);
+			awayTeam.scoreSheet.scoresheet.add(0);
+	}
 	private Team battingTeam() {
 		return teamList.get(battingTeam.index);
 	}

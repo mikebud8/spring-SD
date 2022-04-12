@@ -12,16 +12,16 @@ public class Field implements Serializable {
 	 */
 	private static final long serialVersionUID = 497144774172091570L;
 
-	int runs;
-	Base[] field;
+	private int runs;
+	private Base[] basesState;
 
 	public Field() {
 
 		runs = 0;
-		field = new Base[5];
+		basesState = new Base[5];
 
 		for (int i = 0; i < 5; i++) {
-			field[i] = new Base();
+			basesState[i] = new Base();
 		}
 
 	}
@@ -40,51 +40,51 @@ public class Field implements Serializable {
 		int basesEarned = outcome.getValue();
 		runs = 0;
 
-		field[Bases.BOX.val].player = p;
-		field[Bases.BOX.val].occupied = true;
+		basesState[Bases.BOX.val].player = p;
+		basesState[Bases.BOX.val].setOccupied(true);
 
 		// On any hit all baserunners advance one base. Except for walks
 		// and outs.
 		if( outcome != BasesOnHit.WALK ) {
 
 			if (basesEarned > 0) {
-				field[Bases.HOME.val].movePlayer(field[Bases.THIRD.val]);
-				field[Bases.THIRD.val].movePlayer(field[Bases.SECOND.val]);
-				field[Bases.SECOND.val].movePlayer(field[Bases.FIRST.val]);
-				field[Bases.FIRST.val].clearBase();
+				basesState[Bases.HOME.val].movePlayer(basesState[Bases.THIRD.val]);
+				basesState[Bases.THIRD.val].movePlayer(basesState[Bases.SECOND.val]);
+				basesState[Bases.SECOND.val].movePlayer(basesState[Bases.FIRST.val]);
+				basesState[Bases.FIRST.val].clearBase();
 			} else {
 				System.err.println("Not a hit. Shouldn't be here.");
 			}
 		}
 		for (int i = 1; i <= basesEarned; i++) {
 
-			if (field[Bases.FIRST.val].occupied != true) {
-				field[Bases.FIRST.val].movePlayer(field[Bases.BOX.val]);
-			} else if (field[Bases.SECOND.val].occupied != true) {
-				field[Bases.SECOND.val].movePlayer(field[Bases.FIRST.val]);
-				field[Bases.FIRST.val].movePlayer(field[Bases.BOX.val]);
-			} else if (field[Bases.THIRD.val].occupied != true) {
-				field[Bases.THIRD.val].movePlayer(field[Bases.SECOND.val]);
-				field[Bases.SECOND.val].movePlayer(field[Bases.FIRST.val]);
-				field[Bases.FIRST.val].movePlayer(field[Bases.BOX.val]);
-			} else if (field[Bases.HOME.val].occupied != true) {
-				field[Bases.HOME.val].movePlayer(field[Bases.THIRD.val]);
-				field[Bases.THIRD.val].movePlayer(field[Bases.SECOND.val]);
-				field[Bases.SECOND.val].movePlayer(field[Bases.FIRST.val]);
-				field[Bases.FIRST.val].movePlayer(field[Bases.BOX.val]);
+			if (basesState[Bases.FIRST.val].isOccupied() != true) {
+				basesState[Bases.FIRST.val].movePlayer(basesState[Bases.BOX.val]);
+			} else if (basesState[Bases.SECOND.val].isOccupied() != true) {
+				basesState[Bases.SECOND.val].movePlayer(basesState[Bases.FIRST.val]);
+				basesState[Bases.FIRST.val].movePlayer(basesState[Bases.BOX.val]);
+			} else if (basesState[Bases.THIRD.val].isOccupied() != true) {
+				basesState[Bases.THIRD.val].movePlayer(basesState[Bases.SECOND.val]);
+				basesState[Bases.SECOND.val].movePlayer(basesState[Bases.FIRST.val]);
+				basesState[Bases.FIRST.val].movePlayer(basesState[Bases.BOX.val]);
+			} else if (basesState[Bases.HOME.val].isOccupied() != true) {
+				basesState[Bases.HOME.val].movePlayer(basesState[Bases.THIRD.val]);
+				basesState[Bases.THIRD.val].movePlayer(basesState[Bases.SECOND.val]);
+				basesState[Bases.SECOND.val].movePlayer(basesState[Bases.FIRST.val]);
+				basesState[Bases.FIRST.val].movePlayer(basesState[Bases.BOX.val]);
 			}
 
-			if (field[Bases.HOME.val].occupied == true) {
+			if (basesState[Bases.HOME.val].isOccupied() == true) {
 				runs++;
 
-				field[Bases.HOME.val].clearBase();
+				basesState[Bases.HOME.val].clearBase();
 				System.out.println("Run Scores!!");
 			}
 
 		}
 
 		for (int j = 0; j < basesEarned; j++) {
-			field[j].clearBase();
+			basesState[j].clearBase();
 		}
 
 		//getFieldStatus();
@@ -93,7 +93,7 @@ public class Field implements Serializable {
 
 	public void resetField() {
 		for (int i = 0; i <= Bases.HOME.val; i++) {
-			field[i].clearBase();
+			basesState[i].clearBase();
 		}
 	}
 
@@ -101,10 +101,18 @@ public class Field implements Serializable {
 
 		for (Bases basesIdx : Bases.values()) {
 			String output = basesIdx.name + " is "
-					+ (field[basesIdx.val].player != null ? " occupied" : " not occupied")
-					+ (field[basesIdx.val].player != null ? " by " + field[basesIdx.val].getPlayer().name : "");
+					+ (basesState[basesIdx.val].player != null ? " occupied" : " not occupied")
+					+ (basesState[basesIdx.val].player != null ? " by " + basesState[basesIdx.val].getPlayer().name : "");
 			System.out.println( output );
 		}
+	}
+
+	public int getRuns() {
+		return runs;
+	}
+
+	public Base[] getBasesState() {
+		return basesState;
 	}
 
 	public class Base {
@@ -112,11 +120,9 @@ public class Field implements Serializable {
 		private Player player;
 		//public final Player ghostPlayer;
 
-		boolean occupied;
+		private boolean occupied;
 
 		public Base() {
-			//ghostPlayer = new Player();
-			//ghostPlayer.name ="GHOST";
 			player = null;
 			occupied = false;
 		}
@@ -130,6 +136,15 @@ public class Field implements Serializable {
 			this.player = player;
 		}
 
+		public boolean isOccupied() {
+			return occupied;
+		}
+
+
+		public void setOccupied(boolean occupied) {
+			this.occupied = occupied;
+		}
+		
 		public void clearBase() {
 			this.player = null;
 			this.occupied = false;

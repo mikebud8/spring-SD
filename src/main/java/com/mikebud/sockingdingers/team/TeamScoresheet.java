@@ -13,8 +13,9 @@ public class TeamScoresheet {
 		}
 	}
 	
-	public void setScore(int inning, int score) {
-		int cumulativeScore = scoresheet.get(inning);
-		scoresheet.add(inning, (cumulativeScore + score));
+	public void setScore(int inningIdx, int score) {
+	
+		int cumulativeScore = scoresheet.get( inningIdx );
+		scoresheet.set(inningIdx, (cumulativeScore + score));
 	}
 }

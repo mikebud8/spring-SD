@@ -2,11 +2,17 @@ package com.mikebud.sockingdingers.player;
 
 import java.util.TreeMap;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.mikebud.sockingdingers.consts.BasesOnHit;
 
 //We aren't going over the wire with this.
 @SuppressWarnings("serial")
 public class PlayerRollTableMap extends TreeMap<Integer, BasesOnHit> {
+
+	private boolean isBatter;
+	
 	public RollStat popOut = new RollStat();
 	public RollStat strikeOut = new RollStat();
 	public RollStat groundOut = new RollStat();
@@ -18,11 +24,11 @@ public class PlayerRollTableMap extends TreeMap<Integer, BasesOnHit> {
 	public RollStat triple = new RollStat();
 	public RollStat dinger = new RollStat();
 
-	public PlayerRollTableMap() {
-
+	public PlayerRollTableMap( boolean isBatter ) {
+		this.isBatter = isBatter;
 	}
 
-	public void setStats() {
+	public String setRollTable() {
 		//Nobody's perfect
 		//Returns a mapping associated with the greatest key less than or equal to the given key, or null if there is no such key.
 		this.clear();
@@ -37,6 +43,7 @@ public class PlayerRollTableMap extends TreeMap<Integer, BasesOnHit> {
 		this.put(triple.min, BasesOnHit.TRIPLE);
 		this.put(dinger.min, BasesOnHit.DINGER);
 
+		return generateJsonString();
 	}
 
 	@Override
@@ -75,6 +82,85 @@ public class PlayerRollTableMap extends TreeMap<Integer, BasesOnHit> {
 			min = minIn;
 			max = maxIn;
 		}
+		
+		@Override
+		public String toString() {
+			String output = "" ;
+			
+			if(min == -1) {
+				output = "---";
+			} else {
+				output = min + (max >= 2 ? "-" + max : "");
+			}
+			
+			// literal edge case...
+			if(min == 20) {
+				output = min + "+";
+			}
+			
+			return output;
+		}
+	}
+	
+	public String generateJsonString() {
+		String output = "";
+
+
+		// create `ObjectMapper` instance
+		ObjectMapper mapper = new ObjectMapper();
+		
+		try {
+
+			// create a JSON object
+			ObjectNode rollTable = mapper.createObjectNode();
+			if(isBatter) {
+				
+				rollTable.put("OUT(SO)", strikeOut.toString());
+				rollTable.put("OUT(GB)", groundOut.toString());
+				rollTable.put("OUT(FB)", flyOut.toString());
+				rollTable.put("W", walk.toString());
+				rollTable.put("S", single.toString());
+				rollTable.put("S+", singlePlus.toString());
+				rollTable.put("D", twoBagger.toString());
+				rollTable.put("T", triple.toString());
+				rollTable.put("HR", dinger.toString());
+				
+			} else {
+
+				rollTable.put("OUT(PO)", popOut.toString());
+				rollTable.put("OUT(SO)", strikeOut.toString());
+				rollTable.put("OUT(GB)", groundOut.toString());
+				rollTable.put("OUT(FB)", flyOut.toString());
+				rollTable.put("W", walk.toString());
+				rollTable.put("S", single.toString());
+				rollTable.put("D", twoBagger.toString());
+				rollTable.put("HR", dinger.toString());
+				
+			}
+
+			//ObjectNode rollTableTop = mapper.createObjectNode();
+			//rollTableTop.set("rollTable", rollTable);
+			
+			output = mapper.writer().writeValueAsString(rollTable);
+			
+		} catch (Exception ex) {
+			ex.printStackTrace();
+		}
+
+		/*
+	    output = "rollMap" : {
+	          "-1" : "DINGER",
+	          "1" : "POPOUT",
+	          "3" : "STRIKEOUT",
+	          "11" : "GROUNDOUT",
+	          "15" : "FLYOUT",
+	          "18" : "WALK",
+	          "19" : "SINGLE",
+	          "20" : "TWOBAGGER"
+	        }
+		 */
+
+		return output;
 	}
 }
 

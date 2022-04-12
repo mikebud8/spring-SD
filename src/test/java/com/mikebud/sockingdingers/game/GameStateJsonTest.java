@@ -5,7 +5,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.jdbc.datasource.init.ScriptUtils;
 
-import com.mikebud.sockingdingers.database.DbPlayer;
+import com.mikebud.sockingdingers.database.DbManager;
 import com.mikebud.sockingdingers.player.Player;
 import com.mikebud.sockingdingers.team.BattingOrder;
 import com.mikebud.sockingdingers.team.Team;
@@ -16,7 +16,7 @@ public class GameStateJsonTest {
     @BeforeAll
     static void setup() {
         try {
-        	DbPlayer dbp = new DbPlayer();
+        	DbManager dbp = new DbManager();
             ScriptUtils.executeSqlScript(dbp.conn, new ClassPathResource("schema.sql"));
         } catch (Exception e ){
         	
@@ -26,7 +26,7 @@ public class GameStateJsonTest {
 	@Test
 	public void testJsonifier() {
 		
-		DbPlayer dbp = new DbPlayer();
+		DbManager dbp = new DbManager();
 		
 		Player p1 = dbp.getPlayerFromDatabase(1);
 		Player p2 = dbp.getPlayerFromDatabase(2);

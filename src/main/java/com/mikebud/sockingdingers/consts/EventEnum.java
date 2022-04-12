@@ -2,7 +2,7 @@ package com.mikebud.sockingdingers.consts;
 
 import java.util.HashMap;
 
-public enum Scenario {
+public enum EventEnum {
 	NO_SCENARIO(0),
 	PITCHER_ROLL(1),
 	BATTER_ROLL(2),
@@ -14,9 +14,9 @@ public enum Scenario {
 	STRATEGY_ROLL(8);
 	
 	private final int enumIndex;
-    private static HashMap<Integer, Scenario> map = new HashMap<Integer, Scenario>();
+    private static HashMap<Integer, EventEnum> map = new HashMap<Integer, EventEnum>();
     
-	private Scenario(int idxIn) {
+	private EventEnum(int idxIn) {
 		enumIndex = idxIn;
 	}
 	
@@ -25,12 +25,12 @@ public enum Scenario {
 	}
 	
     static {
-        for (Scenario s : Scenario.values()) {
+        for (EventEnum s : EventEnum.values()) {
             map.put(s.enumIndex, s);
         }
     }
 
-    public static Scenario valueOf(int idx) {
+    public static EventEnum valueOf(int idx) {
         return map.get(idx);
     }
 }

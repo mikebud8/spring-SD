@@ -2,13 +2,13 @@ package com.mikebud.sockingdingers.game;
 
 public class Inning {
 
-	public int inningNum;
+	public int inningIdx;
 	public boolean isTopOfInning;
 	
 	public int outs;
 	
 	public Inning() {
-		inningNum = 0;
+		inningIdx = 0;
 		isTopOfInning = true;
 		outs = 0;
 	}

@@ -5,6 +5,8 @@ import java.util.HashMap;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Service;
 
+import com.mikebud.sockingdingers.team.Team;
+
 @Service
 @Scope("singleton")
 public class InstanceMap extends HashMap<Long, GameInstance>{
@@ -42,6 +44,20 @@ public class InstanceMap extends HashMap<Long, GameInstance>{
 			this.put(uid, new GameInstance(uid));
 			worked = true;
 			numGames++;
+		}
+		
+		return worked;
+	}
+	
+	public boolean addGame(Long uid, Team homeTeam, Team awayTeam) {
+		boolean worked = false;
+		
+		System.out.println(" in Addgame. uid = " + uid);
+		
+		if (numGames <= MAX_GAMES) {
+			this.put(uid, new GameInstance(uid, homeTeam, awayTeam));
+			worked = true;
+			numGames = this.size();
 		}
 		
 		return worked;

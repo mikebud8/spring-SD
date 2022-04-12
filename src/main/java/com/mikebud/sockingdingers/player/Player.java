@@ -8,11 +8,14 @@ public class Player {
 	public int onBaseControl;
 	public String speedInnings;
 	public int cost;
-
+	public boolean hasBatterStats = false;
+	
 	//in-game stuff
 	public int battingOrder;
 	public boolean isPitching;
 
+	public String formattedRollTableString;
+	
 	public PlayerGameStats gameStats;
 	public PlayerRollTableMap rollMap;
 	public ArrayList<PlayerFieldingInfo> positionsArray;
@@ -21,9 +24,16 @@ public class Player {
 		//eventually bring in a json reader.
 
 		gameStats = new PlayerGameStats();
-		rollMap = new PlayerRollTableMap();
+		rollMap = new PlayerRollTableMap( hasBatterStats );
 		positionsArray = new ArrayList<PlayerFieldingInfo>();
 		
+	}
+	
+	public void setRollTable() {
+		if(name == null) {
+			System.err.println("Setting stats for unknown player.");
+		}
+		formattedRollTableString = rollMap.setRollTable();
 	}
 	
 }

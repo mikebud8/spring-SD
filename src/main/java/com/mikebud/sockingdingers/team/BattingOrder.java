@@ -26,8 +26,13 @@ public class BattingOrder {
 		order.add(bo_9);
 		itr = order.iterator();
 
-
+		System.out.println("first batter = " + bo_1.name);
 		currentBatter = bo_1;
+		System.out.println("current batter = " + currentBatter.name);
+	}
+
+	public BattingOrder() {
+		// TODO Auto-generated constructor stub
 	}
 
 	public Player nextBatter() {

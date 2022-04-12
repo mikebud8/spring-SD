@@ -7,7 +7,7 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;
 
-import com.mikebud.sockingdingers.database.DbPlayer;
+import com.mikebud.sockingdingers.database.DbManager;
 import com.mikebud.sockingdingers.game.GameInstance;
 import com.mikebud.sockingdingers.player.Player;
 
@@ -18,6 +18,7 @@ public class SockingDingersApplication {
 		SpringApplication.run(SockingDingersApplication.class, args);
 	}
 
+	/*
 	@Bean
 	public CommandLineRunner commandLineRunner(ApplicationContext ctx) {
 		return args -> {
@@ -29,5 +30,5 @@ public class SockingDingersApplication {
 			System.out.println(p1.name + "\nPositions:\n" + p1.positionsArray.toString() + ".\nRolls:\n" + p1.rollMap.toString());
 
 		};
-	}
+	}*/
 }
